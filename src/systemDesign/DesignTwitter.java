@@ -9,20 +9,6 @@ import java.util.Set;
 
 public class DesignTwitter {
 
-	public static void main(String[] args) {
-		DesignTwitter dt = new DesignTwitter();
-		dt.postTweet(1, 5);
-		List<Integer> list = dt.getNewsFeed(1);
-		System.out.println(list.toString());
-		dt.follow(1, 2);
-		dt.postTweet(2, 6);
-		list = dt.getNewsFeed(1);
-		System.out.println(list.toString());
-		dt.unfollow(1, 2);
-		list = dt.getNewsFeed(1);
-		System.out.println(list.toString());
-	}
-
 	class User {
         // Properties.
         int userId;
