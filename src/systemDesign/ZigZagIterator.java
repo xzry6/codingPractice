@@ -53,14 +53,14 @@ public class ZigZagIterator {
     }
 }
 
-class ZigzagIterator {
+class ZigZagIterator2 {
 	/**
      * Variables.
      */
     Iterator<Integer> i;
     Iterator<Integer> j;
 
-    public ZigzagIterator(List<Integer> v1, List<Integer> v2) {
+    public ZigZagIterator2(List<Integer> v1, List<Integer> v2) {
         i = v2.iterator();
         j = v1.iterator();
     }
