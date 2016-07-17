@@ -46,16 +46,14 @@ public class WordSearchII {
 	}
 
 	private class WordPiece {
-        char c;
         Map<Character, WordPiece> map;
 
-        public WordPiece(char c) {
-            this.c = c;
+        public WordPiece() {
             this.map = new HashMap<Character, WordPiece>();
         }
     }
 
-    public List<String> findWords(char[][] board, String[] words) {
+	public List<String> findWords(char[][] board, String[] words) {
         // Deal with edge cases first.
         if(board == null || board.length == 0 || board[0].length == 0 || words == null || words.length == 0)
             return new ArrayList<String>();
@@ -66,7 +64,7 @@ public class WordSearchII {
         // Find word.
         for(int i = 0; i < board.length; ++ i)
             for(int j = 0; j < board[0].length; ++ j)
-                findWord(set, map, flag, board, new String(), i, j);
+                findWord(set, map, flag, board, new StringBuilder(), i, j);
         return new ArrayList<String>(set);
     }
 
@@ -75,7 +73,7 @@ public class WordSearchII {
         Map<Character, WordPiece> map,
         boolean[][] flag,
         char[][] board,
-        String cur,
+        StringBuilder cur,
         int i,
         int j) 
     {
@@ -89,15 +87,16 @@ public class WordSearchII {
         if(!map.containsKey(board[i][j])) return;
         flag[i][j] = true;
 
-        String ns = cur + board[i][j];
+        cur.append(board[i][j]);
         Map<Character, WordPiece> tmp = map.get(board[i][j]).map;
-        if(tmp.containsKey('\n')) set.add(ns);
-        findWord(set, tmp, flag, board, ns, i + 1, j);
-        findWord(set, tmp, flag, board, ns, i - 1, j);
-        findWord(set, tmp, flag, board, ns, i, j + 1);
-        findWord(set, tmp, flag, board, ns, i, j - 1);
+        if(tmp.containsKey('\n')) set.add(cur.toString());
+        findWord(set, tmp, flag, board, cur, i + 1, j);
+        findWord(set, tmp, flag, board, cur, i - 1, j);
+        findWord(set, tmp, flag, board, cur, i, j + 1);
+        findWord(set, tmp, flag, board, cur, i, j - 1);
 
         flag[i][j] = false;
+        cur.deleteCharAt(cur.length() - 1);
     }
 
     private Map<Character, WordPiece> createGraph(String[] words) {
@@ -107,7 +106,7 @@ public class WordSearchII {
             for(int i = 0; i < word.length(); ++ i) {
                 char c = word.charAt(i);
                 if(!tmp.containsKey(c)) {
-                    WordPiece wp = new WordPiece(c);
+                    WordPiece wp = new WordPiece();
                     tmp.put(c, wp);
                 }
                 tmp = tmp.get(c).map;
