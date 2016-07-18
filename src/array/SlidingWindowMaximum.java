@@ -1,6 +1,9 @@
 package array;
 
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
@@ -56,5 +59,23 @@ public class SlidingWindowMaximum {
         }
 
         return arr;
+    }
+
+    public int[] maxSlidingWindow2(int[] nums, int k) {
+		if(nums == null || nums.length == 0) return nums;
+
+		int[] arr = new int[nums.length - k + 1];
+		Deque<Integer> deque = new LinkedList<Integer>();
+
+		for(int i = 0; i < nums.length; ++ i) {
+			while(!deque.isEmpty() && deque.peek() < nums[i]) deque.poll();
+			deque.addFirst(nums[i]);
+			if(i >= k - 1) {
+				arr[i - k + 1] = deque.getLast();
+				if(arr[i - k + 1] == nums[i - k + 1]) deque.removeLast();
+			}
+		}
+
+		return arr;
     }
 }
