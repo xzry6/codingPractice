@@ -16,9 +16,24 @@ package string;
  */
 public class ShortestPalindrome {
 	public static void main(String[] args) {
-		System.out.println(shortestPalindrome("abcd"));
+		System.out.println(shortestPalindrome2("aacecbaa"));
 	}
-
+	public static String shortestPalindrome2(String s) {
+		int j = 0;
+	    for (int i = s.length() - 1; i >= 0; i--) {
+	        if (s.charAt(i) == s.charAt(j)) { 
+	        		j += 1; 
+	        }
+	    }
+	    if (j == s.length()) { return s; }
+	    String suffix = s.substring(j);
+	    return new StringBuffer(suffix).reverse().toString() + shortestPalindrome2(s.substring(0, j)) + suffix;
+	}
+	// 0, 1
+	// 0, 2    1, 1
+	// 0, 3    1, 2
+	// 0, 4    1, 3     2, 2
+	// 0, 5    1, 4     2, 3
 	public static String shortestPalindrome(String s) {
         if(s == null || s.length() == 0) return "";
 
